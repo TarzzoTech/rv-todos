@@ -1,13 +1,43 @@
-import React, { useContext } from "react";
-import { Store } from "../modal";
-import { ContextAPI } from "../context";
+import React from "react";
+import { TodoStatus } from "../modal";
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import { TodoList } from "./todo-list";
+import { MIN_HEIGHT } from "../utils";
+
+const height = {
+    height: "100%",
+    minHeight: MIN_HEIGHT - 34
+};
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+        margin: theme.spacing(1),
+        border: "1px solid #b3b3b3",
+        borderRadius: "20px",
+        ...height
+    },
+    grid: {
+        padding: theme.spacing(2),
+        ...height
+    },
+    gridItem: {
+        border: "2px solid #b3b3b3"
+    }
+}));
 
 export const View = (props: ViewProps) => {
-    const { state, dispatch }: Store = useContext(ContextAPI);
+    const classes = useStyles();
     return (
-        <ul>
-            <li>Loading: {JSON.stringify(state.IsLoading)}</li>
-        </ul>
+        <div className={classes.root}>
+            <Grid container className={classes.grid}>
+                <Grid item sm={3} className={classes.gridItem}><TodoList category={TodoStatus.OPEN} /></Grid>
+                <Grid item sm={3} className={classes.gridItem}><TodoList category={TodoStatus.TODAY} /></Grid>
+                <Grid item sm={3} className={classes.gridItem}><TodoList category={TodoStatus.IN_PROGRESS} /></Grid>
+                <Grid item sm={3} className={classes.gridItem}><TodoList category={TodoStatus.DONE} /></Grid>
+            </Grid>
+        </div>
     );
 }
 

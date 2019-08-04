@@ -1,0 +1,1 @@
+export const MIN_HEIGHT = 800; // same as the minHeight of the electron window.

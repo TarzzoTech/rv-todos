@@ -5,23 +5,22 @@ const isDev = require("electron-is-dev");
 // set env
 process.env.NODE_ENV = 'development';
 
-
 let win;
 let splash;
 let about;
 
 const defaultOptions = {
-    width: 1024,
-    height: 744,
-    minHeight: 700,
-    minWidth: 900,
+    width: 1250,
+    height: 950,
+    minHeight: 900,
+    minWidth: 1200,
     title: "RV Todo's"
 }
 
 const childWinOptions = {
     width: 824,
     height: 544,
-    minHeight: 500,
+    minHeight: 700,
     minWidth: 700
 }
 
@@ -36,6 +35,11 @@ const menuTemplate = [
             {
                 label: "Quit",
                 role: "quit"
+            },
+            {
+                label: "Dev-tool",
+                click: () => win.webContents.openDevTools(),
+                accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Ctrl+Shift+I'
             }
         ]
     }

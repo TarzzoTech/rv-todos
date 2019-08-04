@@ -3,32 +3,22 @@ import { Todo, TodoStatus } from "../modal";
 const storage = localStorage;
 
 export const checkAndCreateJSON = () => {
-  return new Promise((resolve: (todos: Todo[]) => void, reject) => {
-    try {
-      const todosString = storage.getItem("todos");
-      let todos: Todo[] = [];
-      if (todosString) {
-        todos = JSON.parse(todosString);
-      } else {
-        storage.setItem("todos", JSON.stringify(todos));
-      }
-      resolve(todos);
-    } catch (err) {
-      reject(err);
+  try {
+    const todosString = storage.getItem("todos");
+    let todos: Todo[] = [];
+    if (todosString) {
+      todos = JSON.parse(todosString);
+    } else {
+      storage.setItem("todos", JSON.stringify(todos));
     }
-  });
+    return todos;
+  } catch (err) {
+    return [];
+  }
 };
 
 export const getTodos = (): Todo[] => {
-  let response: Todo[] = [];
-  checkAndCreateJSON()
-    .then(todos => {
-      console.log(todos);
-      response = todos;
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  let response: Todo[] = checkAndCreateJSON();
   return response;
 };
 

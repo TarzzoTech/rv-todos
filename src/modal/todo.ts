@@ -1,6 +1,7 @@
 export interface Todo {
     Id: string;
     Title: string;
+    Description?: string;
     TodoItems: TodoItem[];
     Status: TodoStatus;
     CreateDate: Date;
