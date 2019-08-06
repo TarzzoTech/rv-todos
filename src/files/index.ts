@@ -1,6 +1,90 @@
-import { Todo, TodoStatus } from "../modal";
+import { Todo } from "../modal";
 
 const storage = localStorage;
+
+const data = [
+  {
+    Id: "asassasa",
+    ActionDate: "2019-08-04T05:31:02.045Z",
+    CreateDate: "2019-08-04T05:31:02.045Z",
+    Status: 0,
+    Title: "Item 1",
+    TodoItems: [
+      {
+        Id: "sdfsdfdfdsd",
+        IsEditing: false,
+        Title: "Sub Item 1",
+        Completed: false
+      },
+      {
+        Id: "sdfsdfdfsd",
+        IsEditing: false,
+        Title: "Sub Item 2",
+        Completed: false
+      },
+      {
+        Id: "sdfsdfdfds",
+        IsEditing: false,
+        Title: "Sub Item 3",
+        Completed: false
+      }
+    ]
+  },
+  {
+    Id: "asassasae",
+    ActionDate: "2019-08-04T05:31:02.045Z",
+    CreateDate: "2019-08-04T05:31:02.045Z",
+    Status: 0,
+    Title: "Item 2",
+    TodoItems: [
+      {
+        Id: "sdfsdfdfdsde",
+        IsEditing: false,
+        Title: "Sub Item 11",
+        Completed: false
+      },
+      {
+        Id: "sdfsdfdfsdr",
+        IsEditing: false,
+        Title: "Sub Item 12",
+        Completed: false
+      },
+      {
+        Id: "sdfsdfdfdsd",
+        IsEditing: false,
+        Title: "Sub Item 13",
+        Completed: false
+      }
+    ]
+  },
+  {
+    Id: "asassasas",
+    ActionDate: "2019-08-04T05:31:02.045Z",
+    CreateDate: "2019-08-04T05:31:02.045Z",
+    Status: 0,
+    Title: "Item 3",
+    TodoItems: [
+      {
+        Id: "sdfsdfdfdsdd",
+        IsEditing: false,
+        Title: "Sub Item 21",
+        Completed: false
+      },
+      {
+        Id: "sdfsdfdfsdf",
+        IsEditing: false,
+        Title: "Sub Item 22",
+        Completed: false
+      },
+      {
+        Id: "sdfsdfdfdsd",
+        IsEditing: false,
+        Title: "Sub Item 23",
+        Completed: false
+      }
+    ]
+  }
+];
 
 export const checkAndCreateJSON = () => {
   try {
@@ -9,7 +93,7 @@ export const checkAndCreateJSON = () => {
     if (todosString) {
       todos = JSON.parse(todosString);
     } else {
-      storage.setItem("todos", JSON.stringify(todos));
+      storage.setItem("todos", JSON.stringify(data));
     }
     return todos;
   } catch (err) {

@@ -1,1 +1,2 @@
-export const MIN_HEIGHT = 800; // same as the minHeight of the electron window.
+export const MIN_HEIGHT = 790;
+export const MAX_HEIGHT = 705;

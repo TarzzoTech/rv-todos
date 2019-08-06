@@ -7,7 +7,7 @@ import { MIN_HEIGHT } from "../utils";
 
 const height = {
     height: "100%",
-    minHeight: MIN_HEIGHT - 34
+    minHeight: MIN_HEIGHT
 };
 
 const useStyles = makeStyles((theme) => ({
