@@ -2,11 +2,11 @@ import { Todo } from "../modal";
 
 const storage = localStorage;
 
-const data = [
+const data: Todo[] = [
   {
     Id: "asassasa",
-    ActionDate: "2019-08-04T05:31:02.045Z",
-    CreateDate: "2019-08-04T05:31:02.045Z",
+    ActionDate: new Date(),
+    CreateDate: new Date(),
     Status: 0,
     Title: "Item 1",
     TodoItems: [
@@ -32,8 +32,8 @@ const data = [
   },
   {
     Id: "asassasae",
-    ActionDate: "2019-08-04T05:31:02.045Z",
-    CreateDate: "2019-08-04T05:31:02.045Z",
+    ActionDate: new Date(),
+    CreateDate: new Date(),
     Status: 0,
     Title: "Item 2",
     TodoItems: [
@@ -59,8 +59,8 @@ const data = [
   },
   {
     Id: "asassasas",
-    ActionDate: "2019-08-04T05:31:02.045Z",
-    CreateDate: "2019-08-04T05:31:02.045Z",
+    ActionDate: new Date(),
+    CreateDate: new Date(),
     Status: 0,
     Title: "Item 3",
     TodoItems: [
@@ -89,11 +89,11 @@ const data = [
 export const checkAndCreateJSON = () => {
   try {
     const todosString = storage.getItem("todos");
-    let todos: Todo[] = [];
+    let todos: Todo[] = data;
     if (todosString) {
       todos = JSON.parse(todosString);
     } else {
-      storage.setItem("todos", JSON.stringify(data));
+      storage.setItem("todos", JSON.stringify(todos));
     }
     return todos;
   } catch (err) {

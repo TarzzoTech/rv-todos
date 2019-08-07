@@ -5,12 +5,12 @@ import { makeStyles } from "@material-ui/core";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import List from '@material-ui/core/List';
 import { TodoListItem } from "./todo-list-item";
-import { MAX_HEIGHT } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "100%",
-        minWidth: 175
+        minWidth: 175,
+        height: "100%"
     },
     heading: {
         textAlign: "center",
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
     list: {
         padding: theme.spacing(0),
-        maxHeight: MAX_HEIGHT,
+        height: "91.5%",
         overflowY: "auto"
     }
 }));

@@ -1,2 +1,2 @@
-export const MIN_HEIGHT = 790;
-export const MAX_HEIGHT = 705;
+export const MIN_HEIGHT = 590;
+export const MAX_HEIGHT = 620;

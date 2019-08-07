@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
         ...height
     },
     gridItem: {
-        border: "2px solid #b3b3b3"
+        border: "2px solid #b3b3b3",
+        height: "100%"
     }
 }));
 

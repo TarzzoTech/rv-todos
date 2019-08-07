@@ -10,10 +10,10 @@ let splash;
 let about;
 
 const defaultOptions = {
-    width: 1250,
-    height: 950,
-    minHeight: 900,
-    minWidth: 1200,
+    width: 1050,
+    height: 750,
+    minHeight: 700,
+    minWidth: 1000,
     title: "RV Todo's"
 }
 
