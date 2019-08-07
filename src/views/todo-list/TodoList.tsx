@@ -5,6 +5,9 @@ import { makeStyles } from "@material-ui/core";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import List from '@material-ui/core/List';
 import { TodoListItem } from "./todo-list-item";
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
+import { openCreateModal } from "../../store";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,6 +26,11 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(0),
         height: "91.5%",
         overflowY: "auto"
+    },
+    iconButton: {
+        float: "right",
+        marginTop: theme.spacing(0.5),
+        padding: theme.spacing(1)
     }
 }));
 
@@ -30,6 +38,7 @@ export const TodoList = ({ category }: TodoListProps) => {
     const { state, dispatch }: Store = useContext(ContextAPI);
     const classes = useStyles();
     const todoList = state.TodoList;
+    const createTodo = () => dispatch(openCreateModal());
     return (
         <div className={classes.root}>
             <ListSubheader component="div" className={classes.heading}>
@@ -46,6 +55,15 @@ export const TodoList = ({ category }: TodoListProps) => {
                                 return "Done";
                         }
                     })()
+                }
+                {
+                    category === TodoStatus.OPEN
+                        ?
+                        <IconButton onClick={createTodo} className={classes.iconButton}>
+                            <AddIcon />
+                        </IconButton>
+                        :
+                        <></>
                 }
             </ListSubheader>
             <List component="nav" className={classes.list}>

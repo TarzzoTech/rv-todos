@@ -21,3 +21,10 @@ export enum TodoStatus {
     DONE,
     TODAY
 }
+
+export const TodoStatusObject = {
+    [TodoStatus.OPEN]: 'Open',
+    [TodoStatus.IN_PROGRESS]: 'In Progress',
+    [TodoStatus.DONE]: 'Completed',
+    [TodoStatus.TODAY]: 'Today'
+}

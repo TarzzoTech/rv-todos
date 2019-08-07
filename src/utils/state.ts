@@ -4,6 +4,8 @@ import { getTodos } from "../files";
 export const getInitialState = (): State => {
     return {
         IsLoading: false,
-        TodoList: getTodos()
+        TodoList: getTodos(),
+        showModal: false,
+        selectedTodo: null
     };
 }

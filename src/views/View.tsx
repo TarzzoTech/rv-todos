@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { TodoList } from "./todo-list";
 import { MIN_HEIGHT } from "../utils";
+import { TodoModal } from "./creators";
 
 const height = {
     height: "100%",
@@ -38,6 +39,7 @@ export const View = (props: ViewProps) => {
                 <Grid item sm={3} className={classes.gridItem}><TodoList category={TodoStatus.IN_PROGRESS} /></Grid>
                 <Grid item sm={3} className={classes.gridItem}><TodoList category={TodoStatus.DONE} /></Grid>
             </Grid>
+            <TodoModal />
         </div>
     );
 }
