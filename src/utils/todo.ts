@@ -13,8 +13,6 @@ export const emptyTodo = (): Todo => {
   };
 };
 
-export const addTodo = (todoList: Todo[], todo: Todo): Todo[] => {
-  const newTodoList = JSON.parse(JSON.stringify(todoList));
-  newTodoList.push(todo);
-  return newTodoList;
+export const getTodayItems = (todoList: Todo[]): Todo[] => {
+  return todoList.filter(todo => todo.Status === TodoStatus.TODAY || (new Date(todo.ActionDate).toLocaleDateString() === new Date().toLocaleDateString()));
 };

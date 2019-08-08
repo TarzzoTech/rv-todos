@@ -8,6 +8,7 @@ import { TodoListItem } from "./todo-list-item";
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import { openCreateModal } from "../../store";
+import { getTodayItems } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 export const TodoList = ({ category }: TodoListProps) => {
     const { state, dispatch }: Store = useContext(ContextAPI);
     const classes = useStyles();
-    const todoList = state.TodoList;
+    const todoList = category !== 3 ? [] : getTodayItems(state.TodoList);
     const createTodo = () => dispatch(openCreateModal());
     return (
         <div className={classes.root}>

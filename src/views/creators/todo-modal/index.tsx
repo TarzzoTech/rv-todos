@@ -7,9 +7,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { ContextAPI } from "../../../context";
 import { onModalCancel, onModalSubmit } from "../../../store";
-import { emptyTodo, addTodo } from "../../../utils";
-import { TodoStatusObject } from "../../../modal";
+import { emptyTodo, ToDoStatusOptions } from "../../../utils";
 import { makeStyles } from '@material-ui/core/styles';
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
+    },
+    menu: {
+        width: 200,
     }
 }));
 
@@ -45,7 +48,7 @@ export const TodoModal = () => {
      * passing to action for state update
      */
     const onSubmit = () => {
-        dispatch(onModalSubmit(addTodo(state.TodoList, updatedTodo)));
+        onModalSubmit(dispatch, updatedTodo);
         updateTodo(emptyTodo());
     }
 
@@ -76,15 +79,37 @@ export const TodoModal = () => {
                 <TextField
                     autoFocus
                     margin="dense"
-                    id="Title"
+                    id="Description"
                     className={classes.textField}
-                    defaultValue={updatedTodo.Title}
-                    value={updatedTodo.Title}
+                    defaultValue={updatedTodo.Description}
+                    value={updatedTodo.Description}
                     autoComplete="off"
-                    label="Title"
+                    label="Description"
                     type="text"
-                    onChange={(event) => onInputChanges('Title', event.target.value)}
+                    onChange={(event) => onInputChanges('Description', event.target.value)}
                 />
+                <TextField
+                    id="Status"
+                    select
+                    label="Status"
+                    className={classes.textField}
+                    defaultValue={updatedTodo.Status}
+                    value={updatedTodo.Status}
+                    disabled={todo ? true : false}
+                    onChange={(event) => onInputChanges('Status', event.target.value)}
+                    SelectProps={{
+                        MenuProps: {
+                            className: classes.menu,
+                        },
+                    }}
+                    margin="dense"
+                >
+                    {ToDoStatusOptions.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
             </DialogContent>
             <DialogActions>
                 <Button color="primary" onClick={onCancel}>Close</Button>

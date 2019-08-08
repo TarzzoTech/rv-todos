@@ -2,94 +2,10 @@ import { Todo } from "../modal";
 
 const storage = localStorage;
 
-const data: Todo[] = [
-  {
-    Id: "asassasa",
-    ActionDate: new Date(),
-    CreateDate: new Date(),
-    Status: 0,
-    Title: "Item 1",
-    TodoItems: [
-      {
-        Id: "sdfsdfdfdsd",
-        IsEditing: false,
-        Title: "Sub Item 1",
-        Completed: false
-      },
-      {
-        Id: "sdfsdfdfsd",
-        IsEditing: false,
-        Title: "Sub Item 2",
-        Completed: false
-      },
-      {
-        Id: "sdfsdfdfds",
-        IsEditing: false,
-        Title: "Sub Item 3",
-        Completed: false
-      }
-    ]
-  },
-  {
-    Id: "asassasae",
-    ActionDate: new Date(),
-    CreateDate: new Date(),
-    Status: 0,
-    Title: "Item 2",
-    TodoItems: [
-      {
-        Id: "sdfsdfdfdsde",
-        IsEditing: false,
-        Title: "Sub Item 11",
-        Completed: false
-      },
-      {
-        Id: "sdfsdfdfsdr",
-        IsEditing: false,
-        Title: "Sub Item 12",
-        Completed: false
-      },
-      {
-        Id: "sdfsdfdfdsd",
-        IsEditing: false,
-        Title: "Sub Item 13",
-        Completed: false
-      }
-    ]
-  },
-  {
-    Id: "asassasas",
-    ActionDate: new Date(),
-    CreateDate: new Date(),
-    Status: 0,
-    Title: "Item 3",
-    TodoItems: [
-      {
-        Id: "sdfsdfdfdsdd",
-        IsEditing: false,
-        Title: "Sub Item 21",
-        Completed: false
-      },
-      {
-        Id: "sdfsdfdfsdf",
-        IsEditing: false,
-        Title: "Sub Item 22",
-        Completed: false
-      },
-      {
-        Id: "sdfsdfdfdsd",
-        IsEditing: false,
-        Title: "Sub Item 23",
-        Completed: false
-      }
-    ]
-  }
-];
-
 export const checkAndCreateJSON = () => {
   try {
     const todosString = storage.getItem("todos");
-    let todos: Todo[] = data;
+    let todos: Todo[] = [];
     if (todosString) {
       todos = JSON.parse(todosString);
     } else {
@@ -132,7 +48,14 @@ export const updateTodo = (todo: Todo) => {
         todos = JSON.parse(todosString);
         todos = todos.map(t => {
           if (t.Id === todo.Id) {
-            return { ...t, ...todo };
+            return {
+              ...t,
+              Title: todo.Title,
+              TodoItems: todo.TodoItems,
+              Description: todo.Description,
+              Status: todo.Status,
+              ActionDate: todo.ActionDate
+            };
           } else {
             return t;
           }

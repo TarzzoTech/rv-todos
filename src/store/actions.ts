@@ -5,8 +5,10 @@ import {
   Todo,
   MODAL_SUBMIT,
   CREATE_MODAL_OPEN,
-  UPDATE_MODAL_OPEN
+  UPDATE_MODAL_OPEN,
+  Dispatch
 } from "../modal";
+import { insertTodo } from "../files";
 
 export const setLoader = (show: boolean): Action => {
   return {
@@ -45,12 +47,24 @@ export const onModalCancel = (): Action => {
   };
 };
 
-export const onModalSubmit = (todoList: Todo[]): Action => {
-  return {
-    type: MODAL_SUBMIT,
-    payload: {
-      showModal: false,
-      TodoList: todoList
-    }
-  };
+export const onModalSubmit = (dispatch: Dispatch, todo: Todo): void => {
+  insertTodo(todo)
+    .then((todoList: Todo[]) => {
+      dispatch({
+        type: MODAL_SUBMIT,
+        payload: {
+          showModal: false,
+          TodoList: todoList
+        }
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: MODAL_SUBMIT,
+        payload: {
+          showModal: false,
+          TodoList: []
+        }
+      });
+    });
 };
