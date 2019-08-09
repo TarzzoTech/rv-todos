@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { ContextAPI } from "../../../context";
 import { onModalCancel, onModalSubmit } from "../../../store";
-import { emptyTodo, ToDoStatusOptions } from "../../../utils";
+import { emptyTodo, ToDoStatusOptions, dateBeautifier } from "../../../utils";
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from "@material-ui/core/MenuItem";
 
@@ -54,6 +54,7 @@ export const TodoModal = () => {
 
     // triggered on evert input changes and update values in local state
     const onInputChanges = (key: string, value: any) => {
+        console.log({ [key]: value });
         updateTodo({ ...updatedTodo, [key]: value });
     }
 
@@ -77,7 +78,6 @@ export const TodoModal = () => {
                     onChange={(event) => onInputChanges('Title', event.target.value)}
                 />
                 <TextField
-                    autoFocus
                     margin="dense"
                     id="Description"
                     className={classes.textField}
@@ -110,6 +110,18 @@ export const TodoModal = () => {
                         </MenuItem>
                     ))}
                 </TextField>
+                <TextField
+                    id="datetime-local"
+                    label="Next appointment"
+                    type="datetime-local"
+                    defaultValue={dateBeautifier(updatedTodo.ActionDate)}
+                    value={dateBeautifier(updatedTodo.ActionDate)}
+                    onChange={(event) => onInputChanges('ActionDate', new Date(event.target.value))}
+                    className={classes.textField}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />
             </DialogContent>
             <DialogActions>
                 <Button color="primary" onClick={onCancel}>Close</Button>
@@ -119,5 +131,5 @@ export const TodoModal = () => {
     </>);
 }
 
-export interface TodoModal {
+export interface TodoModalProps {
 }
