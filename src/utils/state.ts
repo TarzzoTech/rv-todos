@@ -6,6 +6,7 @@ export const getInitialState = (): State => {
         IsLoading: false,
         TodoList: getTodos(),
         showModal: false,
-        selectedTodo: null
+        selectedTodo: null,
+        error: null
     };
 }

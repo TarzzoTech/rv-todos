@@ -69,7 +69,7 @@ export const TodoList = ({ category }: TodoListProps) => {
             </ListSubheader>
             <List component="nav" className={classes.list}>
                 {
-                    todoList.map((todo, i) => <TodoListItem todo={todo} key={i} />)
+                    todoList.map((todo, i) => <TodoListItem todo={todo} key={i} dispatch={dispatch} />)
                 }
             </List>
         </div>

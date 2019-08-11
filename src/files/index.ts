@@ -85,3 +85,29 @@ export const deleteTodo = (todo: Todo) => {
     }
   });
 };
+
+export const updateTodoSubItem = (todo: Todo) => {
+  return new Promise((resolve: (todos: Todo[]) => void, reject) => {
+    try {
+      const todosString = storage.getItem("todos");
+      let todos: Todo[] = [];
+      if (todosString) {
+        todos = JSON.parse(todosString);
+        todos = todos.map(t => {
+          if (t.Id === todo.Id) {
+            return {
+              ...t,
+              TodoItems: todo.TodoItems
+            };
+          } else {
+            return t;
+          }
+        });
+      }
+      storage.setItem("todos", JSON.stringify(todos));
+      resolve(todos);
+    } catch (err) {
+      reject(err);
+    }
+  });
+};

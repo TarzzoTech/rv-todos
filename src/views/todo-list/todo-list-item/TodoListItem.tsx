@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Todo } from "../../../modal";
-import { makeStyles, Divider, ListItemIcon, Checkbox } from "@material-ui/core";
+import { Todo, Dispatch } from "../../../modal";
+import { makeStyles, ListItemIcon, Checkbox } from "@material-ui/core";
 import { deepOrange } from '@material-ui/core/colors';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -10,6 +10,11 @@ import Avatar from '@material-ui/core/Avatar';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { openUpdateModal, deleteTodoItem } from "../../../store";
+import { TodoSubList } from "../todo-sub-list";
 
 const useStyles = makeStyles((theme) => ({
     avatar: {
@@ -19,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
     },
     nested: {
         paddingLeft: theme.spacing(8),
-    },
+    }
 }));
 
-export const TodoListItem = ({ todo }: TodoListItemProps) => {
+export const TodoListItem = ({ todo, dispatch }: TodoListItemProps) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [checkedId, addCheckedId] = React.useState([] as string[]);
@@ -31,7 +36,7 @@ export const TodoListItem = ({ todo }: TodoListItemProps) => {
         setOpen(!open);
     }
 
-    const handleToggle = (value: string) => {
+    const handleCheckboxToggle = (value: string) => {
         const currentIndex = checkedId.indexOf(value);
         const newChecked = [...checkedId];
 
@@ -44,6 +49,13 @@ export const TodoListItem = ({ todo }: TodoListItemProps) => {
         addCheckedId(newChecked);
     };
 
+    const onEdit = () => {
+        dispatch(openUpdateModal(todo));
+    }
+    const onDelete = () => {
+        deleteTodoItem(dispatch, todo);
+    }
+
     return (
         <>
             <ListItem button onClick={handleClick}>
@@ -53,6 +65,12 @@ export const TodoListItem = ({ todo }: TodoListItemProps) => {
                     </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary={todo.Title} secondary={todo.Description || "No description provided"} />
+                <IconButton aria-label="Edit" onClick={onEdit}>
+                    <EditIcon />
+                </IconButton>
+                <IconButton aria-label="Delete" onClick={onDelete}>
+                    <DeleteIcon />
+                </IconButton>
                 {
                     todo.TodoItems.length > 0
                         ?
@@ -62,27 +80,7 @@ export const TodoListItem = ({ todo }: TodoListItemProps) => {
                 }
             </ListItem>
             <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    {
-                        todo.TodoItems.map(item => {
-                            return (
-                                <ListItem button className={classes.nested} key={item.Id} onClick={() => handleToggle(item.Id)}>
-                                    <ListItemIcon>
-                                        <Checkbox
-                                            edge="start"
-                                            color='primary'
-                                            checked={checkedId.indexOf(item.Id) > -1}
-                                            tabIndex={-1}
-                                            disableRipple
-                                            inputProps={{ 'aria-labelledby': item.Title }}
-                                        />
-                                    </ListItemIcon>
-                                    <ListItemText id={item.Id} primary={item.Title} />
-                                </ListItem>
-                            );
-                        })
-                    }
-                </List>
+                <TodoSubList todoItems={todo.TodoItems} />
             </Collapse>
         </>
     );
@@ -90,4 +88,5 @@ export const TodoListItem = ({ todo }: TodoListItemProps) => {
 
 export interface TodoListItemProps {
     todo: Todo;
+    dispatch: Dispatch;
 }

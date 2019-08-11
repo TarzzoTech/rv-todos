@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { ContextAPI } from "../../../context";
-import { onModalCancel, onModalSubmit } from "../../../store";
+import { onModalCancel, createTodoItem, updateTodoItem } from "../../../store";
 import { emptyTodo, ToDoStatusOptions, dateBeautifier } from "../../../utils";
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from "@material-ui/core/MenuItem";
@@ -27,18 +27,19 @@ const useStyles = makeStyles((theme) => ({
 
 export const TodoModal = () => {
     const { state, dispatch } = useContext(ContextAPI);
-    const [updatedTodo, updateTodo] = useState(emptyTodo());
+    const [updatedTodo, updateTodoState] = useState(emptyTodo());
     const show = state.showModal;
     const todo = state.selectedTodo;
 
     // componentDidMount
     useEffect(() => {
-        updateTodo(todo ? { ...updatedTodo, ...todo } : updatedTodo);
-    }, []);
+        console.log(todo);
+        updateTodoState(todo ? { ...updatedTodo, ...todo } : updatedTodo);
+    }, [todo]);
 
     // on modal close
     const onCancel = () => {
-        updateTodo(emptyTodo());
+        updateTodoState(emptyTodo());
         dispatch(onModalCancel());
     };
 
@@ -48,14 +49,18 @@ export const TodoModal = () => {
      * passing to action for state update
      */
     const onSubmit = () => {
-        onModalSubmit(dispatch, updatedTodo);
-        updateTodo(emptyTodo());
+        if (todo) {
+            updateTodoItem(dispatch, updatedTodo);
+        } else {
+            createTodoItem(dispatch, updatedTodo); 
+        }
+        updateTodoState(emptyTodo());
     }
 
     // triggered on evert input changes and update values in local state
     const onInputChanges = (key: string, value: any) => {
         console.log({ [key]: value });
-        updateTodo({ ...updatedTodo, [key]: value });
+        updateTodoState({ ...updatedTodo, [key]: value });
     }
 
     const classes = useStyles();
@@ -95,7 +100,7 @@ export const TodoModal = () => {
                     className={classes.textField}
                     defaultValue={updatedTodo.Status}
                     value={updatedTodo.Status}
-                    disabled={todo ? true : false}
+                    disabled={todo ? false : true}
                     onChange={(event) => onInputChanges('Status', event.target.value)}
                     SelectProps={{
                         MenuProps: {

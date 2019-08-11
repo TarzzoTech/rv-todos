@@ -6,6 +6,7 @@ export interface State {
     TodoList: Todo[];
     showModal: boolean;
     selectedTodo: Todo | null;
+    error: any;
 }
 
 export type Dispatch = (action: Action) => void;
